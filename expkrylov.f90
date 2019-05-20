@@ -1335,6 +1335,11 @@ module expkrylov
                 tlimit = min(tlimit, h-tnow)
                 tlimit = setTimestepLimitEigmax (m, eigmax, tlimit, tolymin,  option%uround)
                 istepExpectRemain = ceiling((h-tnow)/(tlimit+option%uround))
+                if (istepExpectRemain .lt. 0) then
+                    write(*,*) "Consider to increase atol."
+                    stop 
+                end if
+                    
                 if (option%InfoOutput) then
                     write(option%ioutfile,fmt_eigmax) eigmax 
                     write(option%ioutfile,fmt_tlimit) tlimit
